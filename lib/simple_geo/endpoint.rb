@@ -63,7 +63,7 @@ module SimpleGeo
         else
           params = []
           options.each do |k,v|
-            params << "#{k}=#{v}"
+            params << "#{k}=#{URI.escape(v, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}"
           end
           endpoint_url "places/#{lat},#{lon}.json?#{params.join("&")}", '1.0'
         end
