@@ -2,8 +2,9 @@ module SimpleGeo
 
   class Endpoint
 
+    @@unsafe_characters = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
+
     class << self
-      @@unsafe_characters = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
       
       def feature(id)
         endpoint_url "features/#{id}.json", '1.0'
