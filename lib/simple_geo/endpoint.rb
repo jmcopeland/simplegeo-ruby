@@ -62,8 +62,9 @@ module SimpleGeo
           endpoint_url "places/#{lat},#{lon}.json", '1.0'
         else
           params = []
+          unsafe_characters = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
           options.each do |k,v|
-            params << "#{k}=#{URI.escape(v, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}"
+            params << "#{k}=#{URI.escape(v, unsafe_characters)}"
           end
           endpoint_url "places/#{lat},#{lon}.json?#{params.join("&")}", '1.0'
         end
@@ -75,8 +76,9 @@ module SimpleGeo
         else
           params = [] 
           params << "address=#{address}"
+          unsafe_characters = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
           options.each do |k,v|
-            params << "#{k}=#{v}"
+            params << "#{k}=#{URI.escape(v, regex)}"
           end
           endpoint_url "places/address.json?#{params.join("&")}", '1.0'
         end
@@ -87,8 +89,9 @@ module SimpleGeo
           endpoint_url "places/#{ip}.json", '1.0'
         else
           params = []
+          unsafe_characters = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
           options.each do |k,v|
-            params << "#{k}=#{v}"
+            params << "#{k}=#{URI.escape(v, unsafe_characters)}"
           end
           endpoint_url "places/#{ip}.json?#{params.join("&")}", '1.0'
         end
